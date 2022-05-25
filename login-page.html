@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <?!= include("login-page-css");?>
+  </head>
+  <body>
+  
+    <div class="container">
+     <div id='div-sign-in'>
+       <h1><span class="teal-text">E-Week Sign in</span></h1>  
+      
+        <div class="row">
+          <div class="input-field col s6">
+            <input id="email" type="email" class="validate">
+            <label for="email">UCINetID</label>
+          </div>
+        </div><!--close row-->
+      
+        <div class="row">
+          <div class="input-field col s6">
+            <input id="grad_year" type="text" class="validate">
+            <label for="grad_year">Graduation year</label>
+          </div>
+        </div><!--close row-->
+     </div>
+     <div id = "loading" hidden = "true" >
+       <h5>Thank you for signing in! We are loading your profile right now! (this may take up to 30 seconds)</h5>
+       <div class="loader"> </div> <!-- spinny circle things --> 
+     </div>
+     
+     <div id="div-studentInfo" hidden = "true"> <!-- this displays student info for esc members to check off! -->
+      <h4>WELCOME TO E-WEEK 2020: Pioneers for Progress!!!</h4><br>
+      <h5>Student Information</h5>
+ 		  <br>
+ 			<form id="formStudentInfo">
+              <!-- Basic Student Info -->
+			  <label for="studentName">Name</label>
+ 			  <input id = "studName" type="text" class="form-control" placeholder="Peter Anteater" readonly="readonly"/>
+              <br>
+ 			  <label for="studentMajor">Major</label>
+ 			  <input id = "studMajor" type="text" class="form-control" placeholder="Engineering" readonly="readonly"/>
+			  <br>
+              <label for="studentGradYear">Graduation Year</label>
+ 			  <input id = "studGradYear" type="text" class="form-control" id="studentGradYear" placeholder="2005" readonly="readonly"/>
+			  <br>
+ 			  <label for="studentEmail">UCINetID</label>
+ 			  <input id = "studEmail" type="text" class="form-control" id="exampleInputEmail1" placeholder="panteater" readonly="readonly"/>
+ 			  <br>
+              <!-- END of Basic Student Info -->
+              <!-- INSERT Customized QR Code -->
+              <h5 > Here is your QR Code! This will be your QR code to check into at all E-Week 2020 Events.</h5>
+              <h5> Please take a <b>screenshot of your personal QR code </b> to check back in with us next time to avoid resigning in!</h5>
+              <img src="" alt = "QR code not showing up" id= "uniqueQR" width = "200" height = "200">
+              <br><br>
+              <!-- END of QR Code -->
+            </form>
+      </div> 
+      
+      <div class="row"> <!--create the submit botton-->
+       <button id="submit" class="btn waves-effect waves-light" type="submit" name="action">Submit<i class="material-icons right">send</i> 
+       </button>
+      </div><!--close row-->
+
+      <div id="goHome" class="row" hidden = "True"> <!--button redirects to homepage-->
+       <button id = "goHomeButton" class="btn waves-effect waves-light" type="submit" onclick="" >Return to Sign-In Page<i class="material-icons right">send</i> 
+       </button>
+      </div><!--end of button redirects to homepage-->
+      <br>
+      
+      <div id = "div-password" hidden = "true">
+       <h4>Override Password</h4>
+       <p> ***This is only for ESC and Volunteer's use only.***</p>
+       <input id="override-password" type = "text" class = "form-control" placeholder = "*****"/>
+     
+       <div class="row"> <!--create the submit botton-->
+         <button id="submitOverridePW" class="btn waves-effect waves-light" type="submit" name="action">Submit Password<i class="material-icons right">send</i> 
+         </button>
+       </div><!--close row-->
+       
+      </div><!--close row-->
+      <div id = "override" class="row" hidden = "true"> <!--create the submit botton-->
+         <button id="overrideButton" class="btn waves-effect waves-light" type="submit" name="action">OverRide- Add Student<i class="material-icons right">send</i> 
+         </button>
+       </div>
+      
+    </div> <!--close container-->
+    
+    
+    
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>      
+    <?!= include("login-page-java");?>
+    
+  </body>
+</html>
+
+
+

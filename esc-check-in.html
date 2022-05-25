@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <?!= include("login-page-css");?>
+    
+  </head>
+  <body>
+  
+    <div class="container">
+     <h3 id = "welcomemessage" >WELCOME TO E-WEEK!!!!</h3><br>
+     <div id = "div-password">
+       <h4>Password</h4>
+       <input id="password" type = "text" class = "form-control" placeholder = "*****"/>
+     </div>
+     <div id="div-studentInfo" hidden = "True"> <!-- this displays student info for esc members to check off! -->
+     
+      <h5>Student Information</h5>
+ 		  <br>
+ 			<form id="formStudentInfo">
+              <!-- Basic Student Info -->
+			  <label for="studentName">Name</label>
+ 			  <input id = "studName" name = "studentName" type="text" class="form-control" placeholder="Peter Anteater" readonly="readonly"/>
+              <br>
+ 			  <label for="studentMajor">Major</label>
+ 			  <input id = "studMajor" name = "studentMajor" type="text" class="form-control" placeholder="Engineering" readonly="readonly"/>
+			  <br>
+              <label for="studentGradYear">Graduation Year</label>
+ 			  <input id = "studGradYear" name = "studentGradYear" type="text" class="form-control" id="studentGradYear" placeholder="2005" readonly="readonly"/>
+			  <br>
+ 			  <label for="studentEmail">UCINetID</label>
+ 			  <input id = "studEmail"name = "studentEmail" type="text" class="form-control" id="exampleInputEmail1" placeholder="panteater" readonly="readonly"/>
+ 			  <br>
+              <!-- END of Basic Student Info -->
+              <!-- Swag Giveaways -->
+              <h5>Swag Pick Up for E-Week </h5>
+              <br>
+              <div name="checkboxSwag">
+ 				<label id="giveAway1"> 
+                <input id="pickedUpSwag1" name = "pickedUpSwag1" type="checkbox" class="filled-in" onclick = "gotSwag1()"/><span>Shirt Picked Up</span>
+ 				</label>
+                <br>
+                <br>
+ 				<label id="giveAway2"> 
+                <input id="pickedUpSwag2" name = "pickedUpSwag2" type="checkbox" class="filled-in" onclick = "gotSwag2()"/><span>Sticker Picked Up</span>
+ 				</label>
+ 			  </div> 
+              <!-- END Giveaways Section -->
+              <br><br>
+              <!-- Records Days Students Attend -->
+              <h5 id = "attendance-header" hidden = "true" >Days Attended:</h5>
+              <div id="monday" class="form-group" hidden = "true">
+				<label for="monday">Monday: Kick-Off Fair</label>
+ 				<input id = "mon" name = "monday" type="text" class="form-control" placeholder="Timestamp" readonly="readonly"/>
+			  </div>
+			  <div id = "tuesday" hidden = "true" >
+				<label for="tuesday">Tuesday: Dean's Breakfast</label>
+ 				<input id = "tue" name = "tuesday"  type="text" class="form-control" placeholder="Timestamp" readonly="readonly"/>
+			  </div>
+			  <div id="wednesday" hidden = "true">
+				<label for="wednesday">Wednesday: EngiTECH</label>
+ 				<input id = "wed" name = "wednesday" type="text" class="form-control" placeholder="Timestamp" readonly="readonly"/>
+			  </div>
+			  <div id="thursday" hidden = "true">
+				<label for="thursday">Thursday: E-Week BBQ</label>
+ 				<input id= "thurs" name = "thursday" type="text" class="form-control" placeholder="Timestamp" readonly="readonly"/>
+			  </div>
+			  <div id = "friday" hidden = "true">
+				<label for="friday">Friday: Awards Banquet </label>
+ 				<input id = "fri" name = "friday" type="text" class="form-control" placeholder="Timestamp" readonly="readonly"/>
+			  </div>
+              <div id = "saturday" hidden = "true">
+                <label for="saturday">Saturday: Sports Picnic Day</label>
+ 				<input id = "sat" name = "saturday" type="text" class="form-control" placeholder="Timestamp" readonly="readonly"/>
+              </div>
+			  <div id = "sunday" class="form-group" hidden = "true">
+				<label for="sunday">Sunday</label>
+ 				<input id = "sun" name = "sunday" type="text" class="form-control" placeholder="Timestamp" readonly="readonly"/>
+			  </div>
+              <!-- END of Days-->
+              <br><br>
+            </form>
+      </div> 
+      <div class="row"> <!--create the submit botton-->
+       <button id="submit" class="btn waves-effect waves-light" type="submit" name="action">Submit<i class="material-icons right">send</i> 
+       </button>
+      </div><!--close row-->
+      <div class="row"> <!--create the submit botton-->
+       <button id="submitPW" class="btn waves-effect waves-light" type="submit" name="action">Submit Password<i class="material-icons right">send</i> 
+       </button>
+      </div><!--close row-->
+      <br><br>
+      <div id="goHome" class="row"> <!--button redirects to homepage-->
+       <button id = "goHomeButton" class="btn waves-effect waves-light" type="submit" name = "action" >Return to Sign-In Page<i class="material-icons right">send</i> 
+       </button>
+      </div><!--end of button redirects to homepage-->
+      
+    </div> <!--close container-->
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>      
+    <?!= include("login-page-java");?>
+    <?!= include("mel-java");?>
+    
+  </body>
+</html>
+

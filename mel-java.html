@@ -1,0 +1,119 @@
+<script>
+  var myscript = "https://script.google.com/macros/s/AKfycbx-lOd4CrV_ytpZaAiNMj2LW2rhbBakUUVYycwgPW_GH7gO32M/exec";
+ 
+  document.getElementById("goHomeButton").addEventListener("click", goHome);
+       
+  function goHome(){
+    window.open(myscript,'_top'); //reloads page
+  }
+       
+       
+  //Password stuff
+  document.getElementById("submitPW").addEventListener("click",pwSubmit);//after clicking submit, the info from html transfer to run submssion
+  function pwSubmit(){
+     var password123 = document.getElementById("password").value;
+     if (password123 == "escesc"){
+       
+       document.getElementById("password").value = "";
+       document.querySelector('#div-studentInfo').style.display = 'block'; // this makes the student's info come up after submission! 
+       document.getElementById("submitPW").style.display = 'none'; // remove submit button
+       document.getElementById("div-password").style.display = 'none'; // take out sign-in block
+     }else {
+     
+       alert("Password is incorrect! Please try again or find an ESC member at the check-in table in front of Engineering Hall.");
+     }
+       
+  
+  }
+  //END OF PASSWORD STUFF
+  
+  google.script.url.getLocation(function(location){
+    var studentInfo = {};
+    studentInfo.uciNetId = location.parameters.user;
+    studentInfo.row = location.parameters.loc;
+    //document.getElementById("welcomemessage").innerHTML = studentInfo.row;
+    google.script.run.withSuccessHandler(updateStudentForm).getStudentInfo(studentInfo);
+    google.script.run.addTimeStamp(studentInfo);
+  });
+  
+  function updateStudentForm(studentInfo) {
+         document.getElementById("studName").value = studentInfo.name;
+         document.getElementById("studMajor").value = studentInfo.major;
+         document.getElementById("studGradYear").value = studentInfo.stuGradYear;
+         document.getElementById("studEmail").value = studentInfo.studentEmail;
+         
+         if (studentInfo.swag1 == "TRUE") {
+           //do something
+           document.getElementById("pickedUpSwag1").checked = "True";
+           document.getElementById("pickedUpSwag1").disabled = "True";
+         }
+         if (studentInfo.swag2 == "TRUE") {
+           //do something
+           document.getElementById("pickedUpSwag2").checked = "True";
+           document.getElementById("pickedUpSwag2").disabled = "True";
+         }
+         
+         //WEEKDAYS ATTENDED TIMESTAMPS -----
+         if (studentInfo.saturday != ""){
+           document.getElementById("attendance-header").style.display = 'block';
+           document.getElementById("sat").value = studentInfo.saturday;
+           document.getElementById("saturday").style.display = 'block';
+         }
+         if(studentInfo.sunday != "") {
+           document.getElementById("attendance-header").style.display = 'block';
+           document.getElementById("sun").value = studentInfo.sunday;
+           document.getElementById("sunday").style.display = 'block';
+         }
+         if(studentInfo.monday != "") {
+           document.getElementById("attendance-header").style.display = 'block';
+           document.getElementById("mon").value = studentInfo.monday;
+           document.getElementById("monday").style.display = 'block';
+         }
+         if(studentInfo.tuesday != "") {
+           document.getElementById("attendance-header").style.display = 'block';
+           document.getElementById("tue").value = studentInfo.tuesday;
+           document.getElementById("tuesday").style.display = 'block';
+         }
+         if(studentInfo.wednesday != "") {
+           document.getElementById("attendance-header").style.display = 'block';
+           document.getElementById("wed").value = studentInfo.wednesday;
+           document.getElementById("wednesday").style.display = 'block';
+         }
+         if(studentInfo.thursday != "") {
+           document.getElementById("attendance-header").style.display = 'block';
+           document.getElementById("thurs").value = studentInfo.thursday;
+           document.getElementById("thursday").style.display = 'block';
+         }
+         if(studentInfo.friday != "") {
+           document.getElementById("attendance-header").style.display = 'block';
+           document.getElementById("fri").value = studentInfo.friday;
+           document.getElementById("friday").style.display = 'block';
+         }
+ }
+ 
+       function gotSwag1(studentInfo) {
+         google.script.url.getLocation(function(location){
+           var studentInfo = {};
+           studentInfo.uciNetId = location.parameters.user;
+           studentInfo.row = location.parameters.loc;
+           google.script.run.updateSwag1(studentInfo);
+         });
+         document.getElementById("pickedUpSwag1").disabled = "True";
+       }
+       
+       function gotSwag2(studentInfo){
+         google.script.url.getLocation(function(location){
+           var studentInfo = {};
+           studentInfo.uciNetId = location.parameters.user;
+           studentInfo.row = location.parameters.loc;
+           google.script.run.updateSwag2(studentInfo);
+         });
+         document.getElementById("pickedUpSwag2").disabled = "True";
+       }
+       
+
+
+
+</script>
+
+

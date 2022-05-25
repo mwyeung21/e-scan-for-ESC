@@ -1,0 +1,148 @@
+    <script>
+       var myscript = "https://script.google.com/macros/s/AKfycbx-lOd4CrV_ytpZaAiNMj2LW2rhbBakUUVYycwgPW_GH7gO32M/exec";
+
+       document.getElementById("submit").addEventListener("click",submission1);
+       document.getElementById("goHomeButton").addEventListener("click", goHome);
+       document.getElementById("overrideButton").addEventListener("click", overrideStudentNotInDatabase);
+       
+       function goHome(){
+         window.open(myscript,'_top'); //reloads page
+       }
+       
+       function submission1(){
+         //check if student in database
+         document.getElementById("submit").style.display = 'none'; // remove submit button
+         document.getElementById("div-sign-in").style.display = 'none'; // take out sign-in block
+         document.getElementById("loading").style.display = 'block'; // remove submit button
+         
+         var netID = document.getElementById("email").value;
+         console.log(netID);
+         google.script.run.withSuccessHandler(isStudentInDatabase).checkStudentInDatabase(netID);
+         //document.getElementById("email").value = "worked";
+         //submission2();
+         
+       }
+       
+       function isStudentInDatabase(returnItem) {
+         document.getElementById("loading").style.display = 'none'; // remove submit button
+         if (returnItem == 0){
+           addNewStudentToDatabase();
+           //alert("something was not found!);
+         }
+         else if (returnItem != 0) {
+           loadReturningStudentInfo(returnItem);
+           //alert("something was found!!");
+         }
+       }
+       
+       function loadReturningStudentInfo(existingStudent){
+         document.getElementById("uniqueQR").src = existingStudent.stuQR;
+         document.getElementById("studName").value = existingStudent.name;
+         document.getElementById("studMajor").value = existingStudent.major;
+         if (existingStudent.major ==  "") {
+           document.getElementById("studMajor").value = existingStudent.dept;
+         }
+         document.getElementById("studGradYear").value = existingStudent.stuGradYear;
+         document.getElementById("studEmail").value = existingStudent.netIDusername;
+         document.querySelector('#div-studentInfo').style.display = 'block'; // this makes the student's info come up after submission! 
+         document.getElementById("submit").style.display = 'none'; // remove submit button
+         document.getElementById("div-sign-in").style.display = 'none'; // take out sign-in block
+         document.getElementById("goHome").style.display = 'block'; // this shows the button to return to homepage
+         document.getElementById("override").style.display = 'none'; //this makes the override button disappear
+         document.getElementById("div-password").style.display = 'none'; //this makes the override button disappear
+         
+       }
+       
+       
+       function addNewStudentToDatabase()
+       {
+       
+         var studentInfo = {};
+         
+         studentInfo.studentEmail = document.getElementById("email").value; //grab info from id= email and store to studentInfo
+         studentInfo.stuGradYear = document.getElementById("grad_year").value;  //grab info from id= gyear and store to studentInfo
+         
+         
+         google.script.run.withSuccessHandler(updateStudentForm).withFailureHandler(errorMessage).userClicked(studentInfo); //send studentInfo to google script code
+         //google.script.run.withSuccessHandler(getUserInfo).userClicked(studentInfo); //send studentInfo to google script code
+
+         
+       }
+       
+       function updateStudentForm(studentInfo) {
+           if (studentInfo == "failed") {
+             alert("Oops! Looks like we cannot find you in our engineering student database!");
+             document.getElementById("div-password").style.display = 'block';
+             document.getElementById("goHome").style.display = 'block'; // this shows the button to return to homepage
+           }
+           else{
+             document.getElementById("email").value = "";  //empty out the fill in box to blank
+             document.getElementById("grad_year").value = "";
+             document.querySelector('#div-studentInfo').style.display = 'block'; // this makes the student's info come up after submission! 
+             document.getElementById("submit").style.display = 'none'; // remove submit button
+             document.getElementById("div-sign-in").style.display = 'none'; // take out sign-in block
+             document.getElementById("goHome").style.display = 'block'; // this shows the button to return to homepage
+             document.getElementById("override").style.display = 'none'; //this makes the override button disappear
+             document.getElementById("div-password").style.display = 'none'; //this makes the override button disappear
+         
+             document.getElementById("uniqueQR").src = studentInfo.stuQR;
+             document.getElementById("studName").value = studentInfo.name;
+             document.getElementById("studMajor").value = studentInfo.major;
+             if (studentInfo.major == "") {
+               document.getElementById("studMajor").value = studentInfo.dept;
+             }
+             document.getElementById("studGradYear").value = studentInfo.stuGradYear;
+             document.getElementById("studEmail").value = studentInfo.studentEmail;
+            
+           }
+       }
+       
+       function overrideStudentNotInDatabase(){
+         // copied code from updateStudentForm and addNewStudentToDatabase
+         var studentInfo = {};
+         studentInfo.override = "TRUE"; //this is the only thing different
+         studentInfo.studentEmail = document.getElementById("email").value; //grab info from id= email and store to studentInfo
+         studentInfo.stuGradYear = document.getElementById("grad_year").value;  //grab info from id= gyear and store to studentInfo
+         
+         
+         google.script.run.withSuccessHandler(updateStudentForm).withFailureHandler(errorMessage).userClicked(studentInfo); //send studentInfo to google script code
+         document.getElementById("email").value = "";  //empty out the fill in box to blank
+         document.getElementById("grad_year").value = "";
+         document.querySelector('#div-studentInfo').style.display = 'block'; // this makes the student's info come up after submission! 
+         document.getElementById("submit").style.display = 'none'; // remove submit button
+         document.getElementById("div-sign-in").style.display = 'none'; // take out sign-in block
+         document.getElementById("goHome").style.display = 'block'; // this shows the button to return to homepage
+         document.getElementById("override").style.display = 'none'; //this makes the override button disappear
+         document.getElementById("div-password").style.display = 'none'; //this makes the override button disappear
+         
+         document.getElementById("uniqueQR").src = studentInfo.stuQR;
+         document.getElementById("studName").value = studentInfo.name;
+         document.getElementById("studMajor").value = studentInfo.major;
+         document.getElementById("studGradYear").value = studentInfo.stuGradYear;
+         document.getElementById("studEmail").value = studentInfo.studentEmail;
+         
+       }
+       
+       function errorMessage(){
+           alert("Sorry...something went wrong.");
+       }
+       
+  //Override Password stuff
+  document.getElementById("submitOverridePW").addEventListener("click",pwOverrideSubmit);//after clicking submit, the info from html transfer to run submssion
+  function pwOverrideSubmit(){
+     var password123 = document.getElementById("override-password").value;
+     if (password123 == "escoverride"){
+       
+       document.getElementById("override-password").value = "";
+       document.getElementById("div-password").style.display = 'none'; // remove submit button
+       document.getElementById("override").style.display = 'block'; // take out sign-in block
+     }else {
+     
+       alert("Password is incorrect! Please try again or find an ESC member at the check-in table in front of Engineering Hall.");
+     }
+       
+  
+  }
+  //END OF PASSWORD STUFF
+       
+    </script>
